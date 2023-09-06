@@ -525,6 +525,18 @@ variable "block_origin_public_access_enabled" {
   description = "When set to 'true' the s3 origin bucket will have public access block enabled"
 }
 
+variable "block_public_acls" {
+  type        = bool
+  default     = true
+  description = "When set to 'true' the s3 origin bucket will have ACLs blocked"
+}
+
+variable "ignore_public_acls" {
+  type        = bool
+  default     = true
+  description = "When set to 'true' the s3 origin bucket will ignore public ACLs"
+}
+
 variable "s3_access_logging_enabled" {
   type        = bool
   default     = null
