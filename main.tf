@@ -343,6 +343,8 @@ resource "time_sleep" "wait_for_aws_s3_bucket_settings" {
   ]
 }
 
+data "aws_canonical_user_id" "current" {}
+
 module "logs" {
   source                   = "cloudposse/s3-log-storage/aws"
   version                  = "1.4.2"
@@ -360,6 +362,13 @@ module "logs" {
   s3_object_ownership = "BucketOwnerPreferred"
   acl                 = null
   grants = [
+    {
+      # Canonical ID for the current account
+      id          = data.aws_canonical_user_id.current.id
+      permissions = ["FULL_CONTROL"]
+      type        = "CanonicalUser"
+      uri         = null
+    },
     {
       # Canonical ID for the awslogsdelivery account
       id          = "c4c1ede66af53448b93c283ce9448c4ba468c9432aa01d700d3878632f77d2d0"
